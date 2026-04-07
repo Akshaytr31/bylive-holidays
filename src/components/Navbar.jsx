@@ -1,4 +1,12 @@
-import { Box, Flex, Heading, Button, Container, Menu } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Button,
+  Container,
+  Menu,
+  HStack,
+} from "@chakra-ui/react";
 import { useNavigate, Link } from "react-router-dom";
 import { authService } from "../services/authService";
 import { LuUser, LuLogOut, LuMenu, LuWallet, LuUsers } from "react-icons/lu";
@@ -40,45 +48,82 @@ const Navbar = () => {
             </Heading>
           </Link>
 
-          <Menu.Root>
-            <Menu.Trigger asChild>
-              <Button variant="ghost" size="sm">
-                <LuMenu size={24} />
-              </Button>
-            </Menu.Trigger>
-            <Menu.Positioner>
-              <Menu.Content>
-                <Menu.Item value="profile" onClick={() => navigate("/profile")}>
-                  <Flex align="center" gap={2}>
-                    <LuUser /> Profile
-                  </Flex>
-                </Menu.Item>
-                <Menu.Item value="wallet" onClick={() => navigate("/wallet")}>
-                  <Flex align="center" gap={2}>
-                    <LuWallet /> Wallet
-                  </Flex>
-                </Menu.Item>
-                <Menu.Item
-                  value="downlines"
-                  onClick={() => navigate("/downlines")}
-                >
-                  <Flex align="center" gap={2}>
-                    <LuUsers /> Downlines
-                  </Flex>
-                </Menu.Item>
-                <Menu.Separator />
-                <Menu.Item
-                  value="logout"
-                  onClick={handleLogout}
-                  color="red.500"
-                >
-                  <Flex align="center" gap={2}>
-                    <LuLogOut /> Logout
-                  </Flex>
-                </Menu.Item>
-              </Menu.Content>
-            </Menu.Positioner>
-          </Menu.Root>
+          <HStack gap={4} display={{ base: "none", md: "flex" }}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate("/profile")}
+            >
+              <LuUser /> Profile
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate("/wallet")}
+            >
+              <LuWallet /> Wallet
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate("/downlines")}
+            >
+              <LuUsers /> Downlines
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleLogout}
+              color="red.600"
+            >
+              <LuLogOut /> Logout
+            </Button>
+          </HStack>
+
+          <Box display={{ base: "block", md: "none" }}>
+            <Menu.Root>
+              <Menu.Trigger asChild>
+                <Button variant="ghost" size="sm">
+                  <LuMenu size={24} />
+                </Button>
+              </Menu.Trigger>
+              <Menu.Positioner>
+                <Menu.Content>
+                  <Menu.Item
+                    value="profile"
+                    onClick={() => navigate("/profile")}
+                  >
+                    <Flex align="center" gap={2}>
+                      <LuUser /> Profile
+                    </Flex>
+                  </Menu.Item>
+                  <Menu.Item value="wallet" onClick={() => navigate("/wallet")}>
+                    <Flex align="center" gap={2}>
+                      <LuWallet /> Wallet
+                    </Flex>
+                  </Menu.Item>
+                  <Menu.Item
+                    value="downlines"
+                    onClick={() => navigate("/downlines")}
+                  >
+                    <Flex align="center" gap={2}>
+                      <LuUsers /> Downlines
+                    </Flex>
+                  </Menu.Item>
+                  <Menu.Separator />
+                  <Menu.Item
+                    value="logout"
+                    onClick={handleLogout}
+                    color="red.500"
+                  >
+                    <Flex align="center" gap={2}>
+                      <LuLogOut /> Logout
+                    </Flex>
+                  </Menu.Item>
+                </Menu.Content>
+              </Menu.Positioner>
+            </Menu.Root>
+          </Box>
         </Flex>
       </Container>
     </Box>

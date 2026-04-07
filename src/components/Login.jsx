@@ -41,7 +41,7 @@ const Login = () => {
       setSuccess(true);
       setTimeout(() => {
         navigate("/dashboard");
-      }, 1500);
+      }, 100);
     } catch (err) {
       console.error("Login failed:", err);
       setError(
@@ -94,11 +94,11 @@ const Login = () => {
               )}
             </Field.Root>
 
-            {success && (
+            {/* {success && (
               <Text color="green.500" textAlign="center" fontSize="sm">
                 Login successful!
               </Text>
-            )}
+            )} */}
 
             <Button
               type="submit"
@@ -116,4 +116,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login; 
