@@ -7,6 +7,8 @@ import {
 import Login from "./components/Login";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
+import Wallet from "./pages/Wallet";
+import Downlines from "./pages/Downlines";
 import Navbar from "./components/Navbar";
 
 const ProtectedRoute = ({ children }) => {
@@ -36,6 +38,22 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/wallet"
+          element={
+            <ProtectedRoute>
+              <Wallet />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/downlines"
+          element={
+            <ProtectedRoute>
+              <Downlines />
             </ProtectedRoute>
           }
         />

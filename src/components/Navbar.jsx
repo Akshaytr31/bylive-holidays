@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, Button, Container, Menu } from "@chakra-ui/react";
 import { useNavigate, Link } from "react-router-dom";
 import { authService } from "../services/authService";
-import { LuUser, LuLogOut, LuMenu } from "react-icons/lu";
+import { LuUser, LuLogOut, LuMenu, LuWallet, LuUsers } from "react-icons/lu";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -51,6 +51,19 @@ const Navbar = () => {
                 <Menu.Item value="profile" onClick={() => navigate("/profile")}>
                   <Flex align="center" gap={2}>
                     <LuUser /> Profile
+                  </Flex>
+                </Menu.Item>
+                <Menu.Item value="wallet" onClick={() => navigate("/wallet")}>
+                  <Flex align="center" gap={2}>
+                    <LuWallet /> Wallet
+                  </Flex>
+                </Menu.Item>
+                <Menu.Item
+                  value="downlines"
+                  onClick={() => navigate("/downlines")}
+                >
+                  <Flex align="center" gap={2}>
+                    <LuUsers /> Downlines
                   </Flex>
                 </Menu.Item>
                 <Menu.Separator />

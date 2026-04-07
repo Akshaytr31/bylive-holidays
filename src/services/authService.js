@@ -67,4 +67,13 @@ export const authService = {
       throw error.response?.data || error.message;
     }
   },
+
+  getDownlines: async () => {
+    try {
+      const response = await apiClient.get("/accounts/downline/");
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error.message;
+    }
+  },
 };
