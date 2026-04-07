@@ -13,6 +13,7 @@ import {
   Stack,
   SimpleGrid,
   Image,
+  Flex,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { authService } from "../services/authService";
@@ -29,7 +30,14 @@ const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+
+  // Editable states
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [bankAccount, setBankAccount] = useState("");
+  const [ifsc, setIfsc] = useState("");
+
   const [referralLink, setReferralLink] = useState("");
 
   useEffect(() => {
@@ -40,7 +48,14 @@ const Profile = () => {
           authService.getReferralLink(),
         ]);
         setProfile(profileData);
+
+        // Initialize editable fields
+        setName(profileData.name || "");
+        setPhone(profileData.phone || "");
         setAddress(profileData.kyc?.address || "");
+        setBankAccount(profileData.kyc?.bank_account_number || "");
+        setIfsc(profileData.kyc?.ifsc_code || "");
+
         setReferralLink(referralData.referral_link || "");
       } catch (error) {
         console.error("Failed to fetch profile data:", error);
@@ -52,19 +67,35 @@ const Profile = () => {
     fetchProfileData();
   }, []);
 
-  const handleUpdateAddress = async () => {
-    if (!address) return;
+  const handleSaveChanges = async () => {
     setUpdating(true);
     try {
-      await authService.updateProfile({ address });
+      const updateData = {
+        name,
+        phone,
+        address,
+        bank_account_number: bankAccount,
+        ifsc_code: ifsc,
+      };
+
+      await authService.updateProfile(updateData);
+
+      // Update local profile state
       setProfile({
         ...profile,
-        kyc: { ...profile.kyc, address },
+        name,
+        phone,
+        kyc: {
+          ...profile.kyc,
+          address,
+          bank_account_number: bankAccount,
+          ifsc_code: ifsc,
+        },
       });
-      alert("Address updated successfully!");
+      alert("Profile updated successfully!");
     } catch (error) {
       console.error("Update failed:", error);
-      alert("Failed to update address.");
+      alert("Failed to update profile details.");
     } finally {
       setUpdating(false);
     }
@@ -87,12 +118,27 @@ const Profile = () => {
   return (
     <Container maxW="4xl" py={10}>
       <VStack gap={8} align="stretch">
-        <Box>
-          <Heading size="xl">Profile Settings</Heading>
-          <Text color="gray.600">
-            View and manage your personal and account details.
-          </Text>
-        </Box>
+        <Flex
+          justify="space-between"
+          align="center"
+          direction={{ base: "column", sm: "row" }}
+          gap={4}
+        >
+          <Box>
+            <Heading size="xl">Profile Settings</Heading>
+            <Text color="gray.600">
+              Update your personal and account details.
+            </Text>
+          </Box>
+          <Button
+            colorPalette="blue"
+            size="lg"
+            onClick={handleSaveChanges}
+            loading={updating}
+          >
+            <LuSave /> Save All Changes
+          </Button>
+        </Flex>
 
         {/* Personal Information */}
         <Box
@@ -109,17 +155,30 @@ const Profile = () => {
           <SimpleGrid columns={{ base: 1, md: 2 }} gap={6}>
             <Field.Root>
               <Field.Label fontWeight="600">Full Name</Field.Label>
-              <Input value={profile?.name || ""} readOnly variant="subtle" />
+              <Input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                variant="subtle"
+              />
             </Field.Root>
             <Field.Root>
               <Field.Label fontWeight="600">User ID</Field.Label>
-              <Input value={profile?.user_id || ""} readOnly variant="subtle" />
+              <Input
+                value={profile?.user_id || ""}
+                readOnly
+                variant="outline"
+                opacity={0.7}
+              />
             </Field.Root>
             <Field.Root>
               <Field.Label fontWeight="600">Phone Number</Field.Label>
               <HStack>
                 <LuPhone />
-                <Input value={profile?.phone || ""} readOnly variant="subtle" />
+                <Input
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  variant="subtle"
+                />
               </HStack>
             </Field.Root>
           </SimpleGrid>
@@ -142,16 +201,16 @@ const Profile = () => {
               <Field.Root>
                 <Field.Label fontWeight="600">Bank Account Number</Field.Label>
                 <Input
-                  value={kyc.bank_account_number || "Not provided"}
-                  readOnly
+                  value={bankAccount}
+                  onChange={(e) => setBankAccount(e.target.value)}
                   variant="subtle"
                 />
               </Field.Root>
               <Field.Root>
                 <Field.Label fontWeight="600">IFSC Code</Field.Label>
                 <Input
-                  value={kyc.ifsc_code || "Not provided"}
-                  readOnly
+                  value={ifsc}
+                  onChange={(e) => setIfsc(e.target.value)}
                   variant="subtle"
                 />
               </Field.Root>
@@ -159,20 +218,12 @@ const Profile = () => {
 
             <Field.Root>
               <Field.Label fontWeight="600">Address</Field.Label>
-              <HStack width="full">
-                <Input
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  placeholder="Enter your address"
-                />
-                <Button
-                  colorPalette="blue"
-                  onClick={handleUpdateAddress}
-                  loading={updating}
-                >
-                  <LuSave /> Save
-                </Button>
-              </HStack>
+              <Input
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Enter your address"
+                variant="subtle"
+              />
             </Field.Root>
           </Stack>
         </Box>
