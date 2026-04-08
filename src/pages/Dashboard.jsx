@@ -439,7 +439,7 @@ const Dashboard = () => {
                 ) : (
                   <Clipboard.Root value={referralLink}>
                     <HStack
-                      justifyContent={"flex-end"}
+                      justifyContent={"space-between"}
                       gap={0}
                       bg="whiteAlpha.50"
                       backdropFilter="blur(10px)"
