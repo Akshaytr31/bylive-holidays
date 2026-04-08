@@ -21,6 +21,7 @@ import {
   LuSettings,
   LuTarget,
   LuGlobe,
+  LuUserPlus,
 } from "react-icons/lu";
 import HeroSlider from "../components/HeroSlider";
 import { motion } from "framer-motion";
@@ -52,7 +53,7 @@ const Dashboard = () => {
       {/* Hero Section */}
       <HeroSlider />
 
-      <Container maxW="6xl" pt={10} pb={20}>
+      <Container maxW="8xl" px={10} pt={10} pb={20}>
         <Stack gap={20}>
           {/* Intro Section */}
           <MotionBox
@@ -204,55 +205,118 @@ const Dashboard = () => {
           </Stack>
 
           {/* Experience Section */}
+          {/* Experience Section - Redesigned to Premium Atmospheric */}
           <Box
-            bg="gray.900"
-            color="white"
-            p={{ base: 12, md: 24 }}
-            borderRadius="4xl"
-            textAlign="center"
             position="relative"
+            h={{ base: "auto", md: "500px" }}
+            borderRadius="6px"
             overflow="hidden"
             shadow="2xl"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
           >
-            {/* Decorative background glow */}
-            <Box
+            {/* Background Image with Zoom Animation */}
+            <MotionBox
+              initial={{ scale: 1.2, rotate: 2 }}
+              animate={{ rotate: -2, scale: 1.3 }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+              }}
               position="absolute"
-              top="-20%"
-              right="-10%"
-              w="400px"
-              h="400px"
-              bg="blue.500"
-              filter="blur(120px)"
-              opacity="0.3"
-            />
-            <Box
-              position="absolute"
-              bottom="-20%"
-              left="-10%"
-              w="400px"
-              h="400px"
-              bg="purple.500"
-              filter="blur(120px)"
-              opacity="0.2"
+              top={0}
+              left={0}
+              right={0}
+              bottom={0}
+              zIndex={0}
+              bgImage="url('/images/animate.jpg')"
+              bgSize="cover"
+              bgPos="center"
             />
 
-            <Stack gap={8} position="relative" zIndex={1} align="center">
-              <LuGlobe size={60} color="#60A5FA" />
-              <Heading size="2xl" fontWeight="bold">
-                Seamless Experiences
-              </Heading>
-              <Text
-                fontSize="xl"
-                color="gray.300"
-                maxW="3xl"
-                mx="auto"
-                lineHeight="relaxed"
-              >
-                By bridging travelers and service providers through a unified
-                digital platform, we ensure a frictionless, reliable, and
-                personalized booking experience.
-              </Text>
-            </Stack>
+            {/* Premium Gradient Overlay */}
+            <Box
+              position="absolute"
+              top={0}
+              left={0}
+              right={0}
+              bottom={0}
+              bgGradient="linear(to-b, blackAlpha.400, blackAlpha.800)"
+              zIndex={1}
+            />
+
+            {/* Content Container */}
+            <Container
+              maxW="4xl"
+              position="relative"
+              zIndex={2}
+              px={10}
+              py={20}
+            >
+              <Stack gap={10} align="center" textAlign="center">
+                <MotionBox
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <Box
+                    p={6}
+                    bg="whiteAlpha.100"
+                    backdropFilter="blur(12px)"
+                    borderRadius="full"
+                    border="1px solid"
+                    borderColor="whiteAlpha.200"
+                    boxShadow="0 0 30px rgba(59, 130, 246, 0.4)"
+                  >
+                    <LuGlobe size={50} color="#60A5FA" />
+                  </Box>
+                </MotionBox>
+
+                <Stack gap={6}>
+                  <MotionBox
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                  >
+                    <Heading
+                      size={{ base: "3xl", md: "4xl" }}
+                      fontWeight="black"
+                      color="white"
+                      letterSpacing="tighter"
+                      textShadow="0 4px 12px rgba(0,0,0,0.5)"
+                    >
+                      Seamless Global Experiences
+                    </Heading>
+                  </MotionBox>
+
+                  <MotionBox
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                  >
+                    <Text
+                      fontSize={{ base: "lg", md: "xl" }}
+                      color="whiteAlpha.900"
+                      lineHeight="relaxed"
+                      maxW="3xl"
+                      fontWeight="medium"
+                      textShadow="0 2px 8px rgba(0,0,0,0.5)"
+                    >
+                      By bridging travelers and service providers through a
+                      unified digital platform, we ensure a frictionless,
+                      reliable, and personalized booking journey across the
+                      entire globe.
+                    </Text>
+                  </MotionBox>
+                </Stack>
+              </Stack>
+            </Container>
           </Box>
 
           {/* Vision Section */}
@@ -295,75 +359,138 @@ const Dashboard = () => {
           </MotionBox>
 
           {/* Referral Section (Preserved Functionality) */}
+          {/* Referral Section - Redesigned to Premium Glassmorphic */}
           <Box
-            p={10}
-            bg="white"
-            border="1px solid"
-            borderColor="gray.100"
-            borderRadius="3xl"
-            shadow="xl"
             position="relative"
-            _before={{
-              content: '""',
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              h: "4px",
-              bg: "blue.500",
-              borderTopRadius: "3xl",
-            }}
+            p={{ base: 8, md: 14 }}
+            bg="gray.950"
+            borderRadius="10px"
+            overflow="hidden"
+            shadow="2xl"
+            border="1px solid"
+            borderColor="whiteAlpha.100"
           >
+            {/* Background Glow */}
+            <Box
+              position="absolute"
+              bottom="-10%"
+              right="-5%"
+              w="300px"
+              h="300px"
+              bg="blue.600"
+              filter="blur(100px)"
+              opacity="0.2"
+              zIndex={0}
+            />
+
             <Stack
               direction={{ base: "column", lg: "row" }}
               justify="space-between"
               align="center"
-              gap={10}
+              gap={12}
+              position="relative"
+              zIndex={1}
             >
               <Box textAlign={{ base: "center", lg: "left" }}>
-                <Heading size="xl" mb={3} fontWeight="extrabold">
-                  Grow Our Ecosystem
+                <HStack
+                  gap={3}
+                  mb={4}
+                  justify={{ base: "center", lg: "flex-start" }}
+                >
+                  <Box bg="blue.600" p={2} borderRadius="lg">
+                    <LuUserPlus size={20} color="white" />
+                  </Box>
+                  <Text
+                    fontSize="sm"
+                    fontWeight="black"
+                    color="blue.400"
+                    letterSpacing="widest"
+                    textTransform="uppercase"
+                  >
+                    Partner Program
+                  </Text>
+                </HStack>
+                <Heading
+                  size="2xl"
+                  mb={4}
+                  fontWeight="black"
+                  color="white"
+                  letterSpacing="tight"
+                >
+                  Grow Our{" "}
+                  <Box as="span" color="blue.500">
+                    Ecosystem
+                  </Box>
                 </Heading>
-                <Text fontSize="lg" color="gray.600">
+                <Text
+                  fontSize="lg"
+                  color="gray.400"
+                  maxW="xl"
+                  lineHeight="relaxed"
+                >
                   Share your unique referral link and join our mission to
-                  redefine travel.
+                  redefine the travel landscape through technology.
                 </Text>
               </Box>
 
-              <Box w={{ base: "100%", lg: "450px" }}>
+              <Box w={{ base: "100%", lg: "500px" }}>
                 {loading ? (
-                  <Skeleton height="60px" width="100%" borderRadius="xl" />
+                  <Skeleton height="70px" width="100%" borderRadius="10px" />
                 ) : (
                   <Clipboard.Root value={referralLink}>
                     <HStack
+                      justifyContent={"flex-end"}
                       gap={0}
-                      shadow="md"
-                      borderRadius="xl"
+                      bg="whiteAlpha.50"
+                      backdropFilter="blur(10px)"
+                      borderRadius="10px"
+                      border="1px solid"
+                      borderColor="whiteAlpha.200"
                       overflow="hidden"
+                      transition="all 0.3s"
+                      _focusWithin={{
+                        borderColor: "blue.500",
+                        shadow: "0 0 20px rgba(59, 130, 246, 0.3)",
+                      }}
                     >
                       <Clipboard.Input
                         borderRadius={0}
                         border="none"
-                        h="60px"
-                        bg="gray.50"
+                        h="70px"
+                        bg="transparent"
+                        color="white"
                         fontSize="md"
-                        px={6}
-                        _focus={{ bg: "white", boxShadow: "none" }}
+                        px={8}
+                        _focus={{ boxShadow: "none" }}
                       />
                       <Clipboard.Trigger asChild>
                         <Button
-                          colorPalette="blue"
-                          h="60px"
-                          borderRadius={0}
+                          h="70px"
+                          minW={"150px"}
                           px={10}
+                          bgGradient="linear(to-r, blue.600, blue.700)"
+                          color="white"
+                          borderRadius={0}
                           fontSize="lg"
                           fontWeight="bold"
+                          _hover={{
+                            bgGradient: "linear(to-r, blue.500, blue.600)",
+                            shadow: "lg",
+                          }}
+                          _active={{ transform: "scale(0.98)" }}
                         >
-                          <Clipboard.Indicator copied={<LuCheck />}>
-                            <HStack gap={2}>
-                              <LuCopy />
-                              <Text>Copy Link</Text>
-                            </HStack>
+                          <Clipboard.Indicator
+                            copied={
+                              <Stack gap={1} align="center">
+                                <LuCheck size={18} color="blue" />
+                                <Text fontSize="sm">Copyed</Text>
+                              </Stack>
+                            }
+                          >
+                            <Stack gap={1} align="center">
+                              <LuCopy size={18} />
+                              <Text fontSize="sm">Copy Link</Text>
+                            </Stack>
                           </Clipboard.Indicator>
                         </Button>
                       </Clipboard.Trigger>
