@@ -10,10 +10,16 @@ import {
 import { useNavigate, Link } from "react-router-dom";
 import { authService } from "../services/authService";
 import { LuUser, LuLogOut, LuMenu, LuWallet, LuUsers } from "react-icons/lu";
+import { useState } from "react";
+import ConfirmationModal from "./ConfirmationModal";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const isAuthenticated = !!localStorage.getItem("access_token");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onOpen = () => setIsOpen(true);
+  const onClose = () => setIsOpen(false);
 
   const handleLogout = async () => {
     try {
@@ -40,7 +46,7 @@ const Navbar = () => {
       top={0}
       zIndex={10}
     >
-      <Container maxW="4xl">
+      <Container maxW="8xl">
         <Flex justify="space-between" align="center">
           <Link to="/dashboard">
             <Heading size="md" color="blue.600" cursor="pointer">
@@ -70,12 +76,7 @@ const Navbar = () => {
             >
               <LuUsers /> Downlines
             </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleLogout}
-              color="red.600"
-            >
+            <Button variant="ghost" size="sm" onClick={onOpen} color="red.600">
               <LuLogOut /> Logout
             </Button>
           </HStack>
@@ -111,11 +112,7 @@ const Navbar = () => {
                     </Flex>
                   </Menu.Item>
                   <Menu.Separator />
-                  <Menu.Item
-                    value="logout"
-                    onClick={handleLogout}
-                    color="red.500"
-                  >
+                  <Menu.Item value="logout" onClick={onOpen} color="red.500">
                     <Flex align="center" gap={2}>
                       <LuLogOut /> Logout
                     </Flex>
@@ -124,6 +121,15 @@ const Navbar = () => {
               </Menu.Positioner>
             </Menu.Root>
           </Box>
+          <ConfirmationModal
+            isOpen={isOpen}
+            onClose={onClose}
+            onConfirm={handleLogout}
+            title="Logout"
+            description="Are you sure you want to logout?"
+            confirmText="Logout"
+            cancelText="Cancel"
+          />
         </Flex>
       </Container>
     </Box>

@@ -15,8 +15,8 @@ import { authService } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const MotionBox = motion(Box);
-const MotionVStack = motion(VStack);
+const MotionBox = motion.create(Box);
+const MotionVStack = motion.create(VStack);
 
 const Login = () => {
   const [userId, setUserId] = useState("BHT00010");
@@ -219,7 +219,7 @@ const Login = () => {
               </Stack>
             </form>
           </MotionVStack>
-        </MotionBox>
+        </MotionBox>h
       </Container>
     </Box>
   );
