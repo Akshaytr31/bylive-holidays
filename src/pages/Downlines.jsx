@@ -47,7 +47,7 @@ const Downlines = () => {
   }
 
   return (
-    <Container maxW="4xl" py={10}>
+    <Container maxW="8xl" py={10}>
       <VStack gap={8} align="stretch">
         <Box>
           <Heading size="xl">My Downlines</Heading>
