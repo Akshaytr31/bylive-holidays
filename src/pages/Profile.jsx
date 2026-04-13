@@ -43,7 +43,7 @@ const SectionCard = ({ title, icon, children, delay = 0 }) => (
     bg="rgba(255, 255, 255, 0.7)"
     backdropFilter="blur(20px)"
     p={{ base: 6, md: 8 }}
-    borderRadius="xl"
+    borderRadius="lg"
     border="1px solid"
     borderColor="whiteAlpha.400"
     boxShadow="0 8px 32px 0 rgba(31, 38, 135, 0.07)"
@@ -66,7 +66,7 @@ const SectionCard = ({ title, icon, children, delay = 0 }) => (
           p={2}
           bg="blue.50"
           color="blue.600"
-          borderRadius="xl"
+          borderRadius="lg"
           display="flex"
           alignItems="center"
           justifyContent="center"
@@ -166,10 +166,10 @@ const Profile = () => {
     return (
       <Container maxW="5xl" py={12}>
         <VStack gap={8} align="stretch">
-          <Skeleton height="100px" borderRadius="xl" />
+          <Skeleton height="100px" borderRadius="lg" />
           <SimpleGrid columns={{ base: 1, md: 2 }} gap={8}>
-            <Skeleton height="400px" borderRadius="xl" />
-            <Skeleton height="400px" borderRadius="xl" />
+            <Skeleton height="400px" borderRadius="lg" />
+            <Skeleton height="400px" borderRadius="lg" />
           </SimpleGrid>
         </VStack>
       </Container>
@@ -202,8 +202,13 @@ const Profile = () => {
         zIndex={0}
       />
 
-      <Container maxW="8xl" py={12} position="relative" zIndex={1}>
-        <MotionVStack gap={10} align="stretch">
+      <Container
+        maxW="8xl"
+        py={{ base: 6, md: 12 }}
+        position="relative"
+        zIndex={1}
+      >
+        <MotionVStack gap={{ base: 6, md: 10 }} align="stretch">
           {/* Header Section */}
           <MotionBox
             initial={{ opacity: 0, y: -20 }}
@@ -212,21 +217,26 @@ const Profile = () => {
           >
             <Flex
               justify="space-between"
-              align="center"
+              align={{ base: "stretch", md: "center" }}
               direction={{ base: "column", md: "row" }}
               gap={8}
               bg="white"
-              p={8}
-              borderRadius="xl"
+              p={{ base: 6, md: 8 }}
+              borderRadius="lg"
               boxShadow="0 4px 20px rgba(0,0,0,0.03)"
               border="1px solid"
               borderColor="gray.100"
             >
-              <HStack gap={6} align="center">
+              <Flex
+                gap={{ base: 4, md: 6 }}
+                align="center"
+                direction={{ base: "column", sm: "row" }}
+                textAlign={{ base: "center", sm: "left" }}
+              >
                 <Box
-                  w="100px"
-                  h="100px"
-                  borderRadius="2xl"
+                  w={{ base: "80px", md: "100px" }}
+                  h={{ base: "80px", md: "100px" }}
+                  borderRadius="lg"
                   bgGradient="to-br"
                   gradientFrom="blue.600"
                   gradientTo="blue.700"
@@ -234,44 +244,50 @@ const Profile = () => {
                   alignItems="center"
                   justifyContent="center"
                   boxShadow="0 10px 25px -5px rgba(37, 99, 235, 0.4)"
+                  flexShrink={0}
                 >
-                  <LuUser size={48} color="white" />
+                  <LuUser size={40} color="white" />
                 </Box>
-                <VStack align="start" gap={1}>
+                <VStack align={{ base: "center", sm: "start" }} gap={1}>
                   <Heading
-                    size="2xl"
+                    size={{ base: "xl", md: "2xl" }}
                     color="gray.800"
                     fontWeight="900"
                     letterSpacing="tight"
                   >
                     {profile?.name || "User Profile"}
                   </Heading>
-                  <HStack gap={4}>
+                  <Stack
+                    direction={{ base: "column", sm: "row" }}
+                    gap={{ base: 1, sm: 4 }}
+                    align="center"
+                  >
                     <HStack gap={1}>
                       <LuShieldCheck size={14} color="#2563EB" />
                       <Text color="blue.600" fontSize="sm" fontWeight="800">
                         {profile?.user_id}
                       </Text>
                     </HStack>
-                    <Separator orientation="vertical" h="12px" />
+                    <Separator orientation="vertical" h="12px" hideFrom="sm" />
                     <HStack gap={1}>
                       <LuPhone size={14} color="#64748B" />
                       <Text color="gray.500" fontSize="sm" fontWeight="600">
                         {profile?.phone}
                       </Text>
                     </HStack>
-                  </HStack>
+                  </Stack>
                 </VStack>
-              </HStack>
+              </Flex>
               <Button
                 bg="blue.600"
                 color="white"
-                size="xl"
-                borderRadius="2xl"
+                size="lg"
+                borderRadius="lg"
                 onClick={handleSaveChanges}
                 loading={updating}
                 px={10}
                 fontWeight="bold"
+                w={{ base: "full", md: "auto" }}
                 _hover={{
                   bg: "blue.700",
                   transform: "translateY(-2px)",
@@ -308,7 +324,7 @@ const Profile = () => {
                     onChange={(e) => setName(e.target.value)}
                     variant="subtle"
                     bg="white"
-                    borderRadius="xl"
+                    borderRadius="lg"
                     h="12"
                     fontSize="md"
                     fontWeight="600"
@@ -334,7 +350,7 @@ const Profile = () => {
                     readOnly
                     variant="outline"
                     bg="gray.50"
-                    borderRadius="xl"
+                    borderRadius="lg"
                     h="12"
                     color="gray.400"
                     cursor="not-allowed"
@@ -355,7 +371,7 @@ const Profile = () => {
                     onChange={(e) => setPhone(e.target.value)}
                     variant="subtle"
                     bg="white"
-                    borderRadius="xl"
+                    borderRadius="lg"
                     h="12"
                     fontSize="md"
                     fontWeight="600"
@@ -391,7 +407,7 @@ const Profile = () => {
                     onChange={(e) => setBankAccount(e.target.value)}
                     variant="subtle"
                     bg="white"
-                    borderRadius="xl"
+                    borderRadius="lg"
                     h="12"
                     fontSize="md"
                     fontWeight="600"
@@ -417,7 +433,7 @@ const Profile = () => {
                     onChange={(e) => setIfsc(e.target.value)}
                     variant="subtle"
                     bg="white"
-                    borderRadius="xl"
+                    borderRadius="lg"
                     h="12"
                     fontSize="md"
                     fontWeight="600"
@@ -438,14 +454,20 @@ const Profile = () => {
                   >
                     Registered Address
                   </Field.Label>
-                  <HStack gap={3}>
-                    <LuMapPin size={24} color="#64748B" />
+                  <Flex
+                    gap={3}
+                    align={{ base: "start", sm: "center" }}
+                    direction={{ base: "column", sm: "row" }}
+                  >
+                    <Box display={{ base: "none", sm: "block" }}>
+                      <LuMapPin size={24} color="#64748B" />
+                    </Box>
                     <Input
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
                       variant="subtle"
                       bg="white"
-                      borderRadius="xl"
+                      borderRadius="lg"
                       h="12"
                       fontSize="md"
                       fontWeight="600"
@@ -455,7 +477,7 @@ const Profile = () => {
                         boxShadow: "0 0 0 1px var(--chakra-colors-blue-500)",
                       }}
                     />
-                  </HStack>
+                  </Flex>
                 </Field.Root>
               </Stack>
             </SectionCard>
@@ -480,7 +502,7 @@ const Profile = () => {
                 </Text>
                 <Box
                   position="relative"
-                  borderRadius="2xl"
+                  borderRadius="lg"
                   overflow="hidden"
                   border="2px solid"
                   borderColor="gray.100"
@@ -524,7 +546,7 @@ const Profile = () => {
                 </Text>
                 <Box
                   position="relative"
-                  borderRadius="2xl"
+                  borderRadius="lg"
                   overflow="hidden"
                   border="2px solid"
                   borderColor="gray.100"
@@ -568,7 +590,7 @@ const Profile = () => {
             bgGradient="to-br"
             gradientFrom="blue.600"
             gradientTo="blue.800"
-            borderRadius="xl"
+            borderRadius="lg"
             color="white"
             boxShadow="0 20px 40px -10px rgba(37, 99, 235, 0.5)"
           >
@@ -604,22 +626,27 @@ const Profile = () => {
 
               <Box w={{ base: "full", lg: "450px" }}>
                 <Clipboard.Root value={referralLink}>
-                  <HStack
-                    bg="whiteAlpha.100"
+                  <Flex
+                    direction={{ base: "column", sm: "row" }}
+                    bg={{ base: "transparent", sm: "whiteAlpha.100" }}
                     backdropFilter="blur(10px)"
-                    p={1}
-                    borderRadius="2xl"
-                    border="1px solid"
+                    p={{ base: 0, sm: 1 }}
+                    borderRadius="lg"
+                    border={{ base: "none", sm: "1px solid" }}
                     borderColor="whiteAlpha.200"
+                    gap={{ base: 4, sm: 0 }}
                     overflow="hidden"
                   >
                     <Clipboard.Input
-                      border="none"
-                      bg="transparent"
+                      border={{ base: "1px solid", sm: "none" }}
+                      borderColor="whiteAlpha.300"
+                      bg={{ base: "whiteAlpha.100", sm: "transparent" }}
+                      borderRadius={{ base: "lg", sm: "none" }}
                       color="white"
                       fontWeight="bold"
                       fontSize="md"
                       px={6}
+                      h={{ base: "14", sm: "auto" }}
                       _focus={{ boxShadow: "none" }}
                     />
                     <Clipboard.Trigger asChild>
@@ -627,10 +654,11 @@ const Profile = () => {
                         bg="white"
                         color="blue.700"
                         px={8}
-                        h="12"
-                        borderRadius="xl"
+                        h="14"
+                        borderRadius={{ base: "lg", sm: "lg" }}
                         fontWeight="900"
-                        _hover={{ bg: "blue.50", transform: "scale(1.02)" }}
+                        w={{ base: "full", sm: "auto" }}
+                        _hover={{ bg: "blue.50", transform: "scale(1.01)" }}
                         _active={{ transform: "scale(0.98)" }}
                       >
                         <Clipboard.Indicator
@@ -646,7 +674,7 @@ const Profile = () => {
                         </Clipboard.Indicator>
                       </Button>
                     </Clipboard.Trigger>
-                  </HStack>
+                  </Flex>
                 </Clipboard.Root>
               </Box>
             </Flex>
