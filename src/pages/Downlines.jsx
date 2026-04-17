@@ -38,7 +38,7 @@ const StatCard = ({ title, value, icon, color, delay = 0 }) => (
     bg="whiteAlpha.800"
     backdropFilter="blur(12px)"
     p={6}
-    borderRadius="2xl"
+    borderRadius="lg"
     border="1px solid"
     borderColor="whiteAlpha.400"
     flex={1}
@@ -61,7 +61,7 @@ const StatCard = ({ title, value, icon, color, delay = 0 }) => (
           {title}
         </Text>
         <Heading
-          size="2xl"
+          size="lg"
           fontWeight="950"
           color="gray.800"
           letterSpacing="tighter"
@@ -98,8 +98,7 @@ const Downlines = () => {
   const stats = useMemo(() => {
     const total = downlines.reduce((acc, curr) => acc + curr.count, 0);
     const active = downlines.reduce(
-      (acc, level) =>
-        acc + level.users.filter((u) => u.status === "ACTIVE").length,
+      (acc, level) => acc + level.users.filter((u) => u.is_mlm_active).length,
       0,
     );
     return { total, active, levels: downlines.length };
@@ -110,13 +109,13 @@ const Downlines = () => {
       <Box h="100vh" bg="gray.50" py={10}>
         <Container maxW="6xl">
           <VStack gap={8} align="stretch">
-            <Skeleton height="100px" borderRadius="2xl" />
+            <Skeleton height="100px" borderRadius="lg" />
             <SimpleGrid columns={{ base: 1, md: 3 }} gap={6}>
-              <Skeleton height="120px" borderRadius="2xl" />
-              <Skeleton height="120px" borderRadius="2xl" />
-              <Skeleton height="120px" borderRadius="2xl" />
+              <Skeleton height="120px" borderRadius="lg" />
+              <Skeleton height="120px" borderRadius="lg" />
+              <Skeleton height="120px" borderRadius="lg" />
             </SimpleGrid>
-            <Skeleton height="400px" borderRadius="2xl" />
+            <Skeleton height="400px" borderRadius="lg" />
           </VStack>
         </Container>
       </Box>
@@ -163,7 +162,7 @@ const Downlines = () => {
           >
             <Flex justify="space-between" align="end" wrap="wrap" gap={6}>
               <VStack align="start" gap={1}>
-                <Heading size="2xl" fontWeight="950" color="gray.900">
+                <Heading size="lg" fontWeight="950" color="gray.900">
                   Network Architecture
                 </Heading>
                 <HStack gap={2}>
@@ -178,7 +177,7 @@ const Downlines = () => {
                 gap={4}
                 bg="white"
                 p={2}
-                borderRadius="2xl"
+                borderRadius="lg"
                 shadow="sm"
                 border="1px solid"
                 borderColor="gray.100"
@@ -235,7 +234,7 @@ const Downlines = () => {
                     backdropFilter="blur(20px)"
                     border="1px solid"
                     borderColor="whiteAlpha.600"
-                    borderRadius="2xl"
+                    borderRadius="lg"
                     overflow="hidden"
                     shadow="sm"
                   >
@@ -313,9 +312,16 @@ const Downlines = () => {
                                 textTransform="uppercase"
                                 fontSize="xs"
                                 letterSpacing="widest"
-                                textAlign="right"
                               >
-                                Protocol Status
+                                Wallet Status
+                              </Table.ColumnHeader>
+                              <Table.ColumnHeader
+                                fontWeight="900"
+                                textTransform="uppercase"
+                                fontSize="xs"
+                                letterSpacing="widest"
+                              >
+                                MLM Status
                               </Table.ColumnHeader>
                             </Table.Row>
                           </Table.Header>
@@ -343,12 +349,13 @@ const Downlines = () => {
                                 <Table.Cell>
                                   <Badge
                                     variant="subtle"
-                                    colorPalette="gray"
+                                    colorPalette="blue"
                                     fontSize="2xs"
-                                    fontWeight="black"
-                                    py={1}
+                                    fontWeight="bold"
+                                    px={2}
+                                    borderRadius="lg"
                                   >
-                                    # {user.user_id}
+                                    ID: {user.user_id}
                                   </Badge>
                                 </Table.Cell>
                                 <Table.Cell
@@ -358,26 +365,49 @@ const Downlines = () => {
                                 >
                                   {user.phone || "N/A"}
                                 </Table.Cell>
-                                <Table.Cell textAlign="center" display={'flex'} justifyContent={'flex-end'} alignItems={'center'}>
-                                  <Badge
-                                    colorPalette={
-                                      user.status === "ACTIVE" ? "green" : "red"
-                                    }
-                                    variant="solid"
-                                    size="sm"
-                                    px={3}
-                                    borderRadius="full"
-                                    fontWeight="black"
-                                    textTransform="uppercase"
-                                    width={'100px'}
-                                    display={'flex'}
-                                    justifyContent={'center'}
-                                    alignItems={'center'}
-                                  >
-                                    {user.status === "ACTIVE"
-                                      ? "Active"
-                                      : "Inactive"}
-                                  </Badge>
+                                <Table.Cell textAlign="right">
+                                  <Flex justify="flex-start" align="center">
+                                    <Badge
+                                      width={"70px"}
+                                      colorPalette={
+                                        user.is_wallet_active ? "green" : "red"
+                                      }
+                                      variant="subtle"
+                                      size="sm"
+                                      px={3}
+                                      borderRadius="lg"
+                                      fontWeight="bold"
+                                      display={"flex"}
+                                      justifyContent={"center"}
+                                      alignItems={"center"}
+                                    >
+                                      {user.is_wallet_active
+                                        ? "Active"
+                                        : "Inactive"}
+                                    </Badge>
+                                  </Flex>
+                                </Table.Cell>
+                                <Table.Cell textAlign="right">
+                                  <Flex justify="flex-start" align="center">
+                                    <Badge
+                                      width={"70px"}
+                                      colorPalette={
+                                        user.is_mlm_active ? "green" : "red"
+                                      }
+                                      variant="subtle"
+                                      size="sm"
+                                      px={3}
+                                      borderRadius="lg"
+                                      fontWeight="bold"
+                                      display={"flex"}
+                                      justifyContent={"center"}
+                                      alignItems={"center"}
+                                    >
+                                      {user.is_mlm_active
+                                        ? "Active"
+                                        : "Inactive"}
+                                    </Badge>
+                                  </Flex>
                                 </Table.Cell>
                               </Table.Row>
                             ))}

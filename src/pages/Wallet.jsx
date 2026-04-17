@@ -162,10 +162,10 @@ const Wallet = () => {
       return;
     }
 
-    if (Number(payoutAmount) > walletData?.total_balance) {
+    if (Number(payoutAmount) > walletData?.summary?.withdrawable) {
       setPayoutStatus({
         type: "error",
-        message: "Insufficient balance.",
+        message: "Insufficient available balance.",
       });
       return;
     }
@@ -407,9 +407,56 @@ const Wallet = () => {
                     Consolidated Balance
                   </Text>
                   <Heading size="6xl" fontWeight="900" letterSpacing="tighter">
-                    ₹ {walletData?.total_balance?.toLocaleString() || "0.00"}
+                    ₹{" "}
+                    {walletData?.summary?.total_earnings?.toLocaleString() ||
+                      "0.00"}
                   </Heading>
                 </VStack>
+
+                {/* Liquidity Overview */}
+                <HStack
+                  gap={10}
+                  bg="whiteAlpha.100"
+                  p={4}
+                  borderRadius="lg"
+                  border="1px solid"
+                  borderColor="whiteAlpha.200"
+                >
+                  <VStack align="start" gap={0}>
+                    <Text
+                      fontSize="2xs"
+                      fontWeight="900"
+                      color="blue.200"
+                      textTransform="uppercase"
+                    >
+                      Available
+                    </Text>
+                    <Text fontSize="xl" fontWeight="900" color="green.300">
+                      ₹{" "}
+                      {walletData?.summary?.withdrawable?.toLocaleString() ||
+                        "0.00"}
+                    </Text>
+                  </VStack>
+                  <Separator
+                    orientation="vertical"
+                    h="30px"
+                    borderColor="whiteAlpha.200"
+                  />
+                  <VStack align="start" gap={0}>
+                    <Text
+                      fontSize="2xs"
+                      fontWeight="900"
+                      color="blue.200"
+                      textTransform="uppercase"
+                    >
+                      Locked
+                    </Text>
+                    <Text fontSize="xl" fontWeight="900" color="orange.300">
+                      ₹{" "}
+                      {walletData?.summary?.locked?.toLocaleString() || "0.00"}
+                    </Text>
+                  </VStack>
+                </HStack>
 
                 {/* Bottom Bar: Stats & Actions */}
                 <Flex justify="space-between" align="center" w="full">
@@ -487,11 +534,60 @@ const Wallet = () => {
               />
               <WalletCard
                 title="Passive Revenue"
-                balance={walletData?.passive_wallet?.balance}
+                balance={walletData?.passive_wallet?.total}
                 icon={<LuTrendingUp size={28} />}
                 color="purple"
                 delay={0.5}
               />
+              {walletData?.next_unlock && (
+                <MotionBox
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                  bg="rgba(255, 255, 255, 0.7)"
+                  backdropFilter="blur(24px)"
+                  p={6}
+                  borderRadius="lg"
+                  border="1px solid"
+                  borderColor="orange.200"
+                  boxShadow="0 8px 32px 0 rgba(251, 146, 60, 0.07)"
+                  _hover={{ transform: "scale(1.02)", shadow: "xl" }}
+                >
+                  <HStack justify="space-between" align="center">
+                    <VStack align="start" gap={0}>
+                      <Text
+                        fontSize="xs"
+                        fontWeight="900"
+                        color="orange.600"
+                        textTransform="uppercase"
+                        letterSpacing="widest"
+                      >
+                        Next Unlock
+                      </Text>
+                      <Heading size="md" fontWeight="900" color="gray.800">
+                        ₹ {walletData.next_unlock.amount?.toLocaleString()}
+                      </Heading>
+                      <Text fontSize="2xs" color="gray.500" fontWeight="bold">
+                        {new Date(
+                          walletData.next_unlock.unlock_at,
+                        ).toLocaleDateString(undefined, {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </Text>
+                    </VStack>
+                    <Box
+                      p={3}
+                      bg="orange.50"
+                      color="orange.600"
+                      borderRadius="lg"
+                    >
+                      <LuShieldCheck size={20} />
+                    </Box>
+                  </HStack>
+                </MotionBox>
+              )}
             </Grid>
           </GridItem>
         </Grid>
@@ -604,10 +700,12 @@ const Wallet = () => {
                     textTransform="uppercase"
                     letterSpacing="widest"
                   >
-                    Current Liquidity
+                    Withdrawable Liquidity
                   </Text>
                   <Heading size="3xl" fontWeight="900" letterSpacing="tight">
-                    ₹ {walletData?.total_balance?.toLocaleString() || "0.00"}
+                    ₹{" "}
+                    {walletData?.summary?.withdrawable?.toLocaleString() ||
+                      "0.00"}
                   </Heading>
                 </VStack>
               </Box>
@@ -627,7 +725,9 @@ const Wallet = () => {
                     gap={1}
                     cursor="pointer"
                     onClick={() =>
-                      setPayoutAmount(walletData?.total_balance?.toString())
+                      setPayoutAmount(
+                        walletData?.summary?.withdrawable?.toString(),
+                      )
                     }
                   >
                     <Text fontSize="2xs" fontWeight="900">

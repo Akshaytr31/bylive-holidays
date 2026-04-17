@@ -461,7 +461,7 @@ const Dashboard = () => {
                         color="white"
                         fontSize="md"
                         px={8}
-                        _focus={{ boxShadow: "none" }}
+                        _focus={{ border: "none", outline: "none" }}
                       />
                       <Clipboard.Trigger asChild>
                         <Button
